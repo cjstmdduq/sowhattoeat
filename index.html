@@ -5,11 +5,8 @@
     <meta charset="UTF-8">
     <title>그래서 오늘 뭐먹지</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-    <link rel="icon" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/egg-fried.svg"
-        type="image/svg+xml">
-
+    <link rel="icon" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/egg-fried.svg" type="image/svg+xml">
     <style>
         :root {
             --primary-color: #3498db;
@@ -33,7 +30,6 @@
             color: var(--text-color);
             line-height: 1.6;
         }
-
         .theme-bar {
             height: 6px;
             width: 100%;
@@ -44,7 +40,6 @@
             z-index: 999;
         }
 
-        /* ✅ 인트로 애니메이션 */
         .intro {
             display: flex;
             justify-content: center;
@@ -84,7 +79,6 @@
             }
         }
 
-        /* ✅ 메인 콘텐츠 등장 */
         .main-content {
             opacity: 0;
             transform: translateY(20px);
@@ -194,15 +188,6 @@
         #history li:hover {
             background: rgba(0, 0, 0, 0.05);
         }
-
-        iframe {
-            margin-top: 40px;
-            border-radius: 15px;
-            width: 100%;
-            height: 60vh;
-            border: none;
-            box-shadow: var(--shadow);
-        }
     </style>
 </head>
 
@@ -216,21 +201,19 @@
     <div class="main-content">
         <h2>점심 메뉴 고르기 힘드시죠?</h2>
         <div class="card">
-            <label><input type="checkbox" id="midOk" onchange="updateCheckboxStyle()">조금 더 보태도 돼요!</label><br><br>
-            <label><input type="checkbox" id="specialOnly" onchange="updateCheckboxStyle()">오늘은 특식이랍니다!</label><br><br>
+            <label><input type="checkbox" id="midOk">조금 더 보태도 돼요!</label><br><br>
+            <label><input type="checkbox" id="specialOnly">오늘은 특식이랍니다!</label><br><br>
             <div id="categoryLabel" style="font-size: 1.2em; color: var(--text-light); margin-bottom: 10px;"></div>
             <div id="menu"></div>
             <ul id="history"></ul>
             <div id="actionButtons">
                 <button id="recommendBtn" onclick="recommendMenu()">점·메·추!</button>
             </div>
-            <div id="map"></div>
         </div>
     </div>
 
     <script>
         const menuList = {
-            // 🥢 일반 메뉴
             regular: [
                 "돈돼지유 생삼겹살 김치찌개",
                 "금문중화요리",
@@ -246,8 +229,6 @@
                 "보승회관 합정점",
                 "맥도날드 합정메세나폴리스"
             ],
-
-            // 💸 중간 가격 메뉴
             mid: [
                 "물고기초밥",
                 "의정부부대찌개",
@@ -255,11 +236,9 @@
                 "생선구이전문점",
                 "버거4.5"
             ],
-
-            // 🥂 특식 메뉴
             special: [
                 "명륜진사갈비 서울 합정점",
-                "피자네버슬립스 합정상수점",
+                "피자네버슬립스 합정상수점"
             ]
         };
 
@@ -275,12 +254,9 @@
                 button.style.backgroundColor = "#3498db";
             }
             document.getElementById("menu").innerHTML = "";
-            document.getElementById("map").innerHTML = "";
             document.getElementById("history").innerHTML = "";
             const actionButtons = document.getElementById("actionButtons");
-            actionButtons.innerHTML = `
-        <button id="recommendBtn" onclick="recommendMenu()">점·메·추!</button>
-      `;
+            actionButtons.innerHTML = `<button id="recommendBtn" onclick="recommendMenu()">점·메·추!</button>`;
         }
 
         function recommendMenu() {
@@ -298,16 +274,12 @@
 
             if (unusedMenus.length === 0) {
                 document.getElementById("menu").innerHTML = `<span>흥, 그냥 너 알아서 해라 😤</span>`;
-                document.getElementById("map").innerHTML = "";
-                actionButtons.innerHTML = `
-          <button onclick='resetHistory()'>🔄 전체 메뉴 리셋</button>
-        `;
+                actionButtons.innerHTML = `<button onclick='resetHistory()'>🔄 전체 메뉴 리셋</button>`;
                 return;
             }
 
             document.getElementById("menu").innerHTML = `<span class='spinner'>두구두구두구...</span>`;
             document.getElementById("categoryLabel").innerText = "";
-            document.getElementById("map").innerHTML = "";
 
             let count = 0;
             const maxCount = 15;
@@ -319,7 +291,6 @@
 
                 if (count >= maxCount) {
                     clearInterval(shuffleInterval);
-
                     const finalMenu = unusedMenus[Math.floor(Math.random() * unusedMenus.length)];
                     document.getElementById("menu").innerHTML = `🍱 오늘은... <span>${finalMenu}</span> 어때?`;
 
@@ -330,21 +301,9 @@
                     usedMenus.push(finalMenu);
 
                     actionButtons.innerHTML = `
-            <button onclick='recommendMenu()'>다시 추천받기</button>
-            <button onclick='resetHistory()' style='margin-left: 10px; background-color: #e74c3c;'>리셋</button>
-          `;
-
-                    const encodedMenu = encodeURIComponent(finalMenu);
-                    if (window.innerWidth <= 768) {
-                        document.getElementById("map").innerHTML = `
-              <a href="https://map.naver.com/v5/search/${encodedMenu}" target="_blank"
-                style="margin-top:30px; display:inline-block; font-size:1em; color:#3498db; text-decoration:underline;">
-                📍 "${finalMenu}" 지도에서 보기
-              </a>
-            `;
-                    } else {
-                        document.getElementById("map").innerHTML = `<iframe src="https://map.naver.com/v5/search/${encodedMenu}" frameborder="0"></iframe>`;
-                    }
+                        <button onclick='recommendMenu()'>다시 추천받기</button>
+                        <button onclick='resetHistory()' style='margin-left: 10px; background-color: #e74c3c;'>리셋</button>
+                    `;
                 }
             }, interval);
         }
