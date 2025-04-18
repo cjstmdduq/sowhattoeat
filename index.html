@@ -7,188 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     <link rel="icon" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/icons/egg-fried.svg" type="image/svg+xml">
-    <style>
-        :root {
-            --primary-color: #3498db;
-            --secondary-color: #e74c3c;
-            --accent-color: #f39c12;
-            --background-color: #fffbe6;
-            --text-color: #2c3e50;
-            --text-light: #888;
-            --card-bg: #fff;
-            --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            --border-radius: 20px;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            background: var(--background-color);
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        .theme-bar {
-            height: 6px;
-            width: 100%;
-            background: linear-gradient(to right, var(--primary-color), var(--accent-color), var(--secondary-color));
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 999;
-        }
-
-        .intro {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
-            animation: fadeOut 1.2s ease 2.5s forwards;
-        }
-
-        .intro h1,
-        .intro .dev {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeSlideUp 1s ease forwards;
-        }
-
-        .intro .dev {
-            font-size: 0.9em;
-            color: #aaa;
-            margin-top: 12px;
-            animation-delay: 0.3s;
-            animation-fill-mode: forwards;
-        }
-
-        @keyframes fadeSlideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                visibility: hidden;
-                height: 0;
-            }
-        }
-
-        .main-content {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s ease 3s forwards;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 40px 20px;
-        }
-
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-            width: 100%;
-            max-width: 80vw;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-size: 1.1em;
-            color: var(--text-color);
-            transition: var(--transition);
-        }
-
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        button {
-            padding: 16px 32px;
-            font-size: 1.3em;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-top: 30px;
-            font-weight: bold;
-            transition: var(--transition);
-            background-color: var(--primary-color);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        #menu {
-            font-size: 2.2em;
-            margin: 30px 0;
-            font-weight: bold;
-            color: var(--secondary-color);
-            min-height: 1.5em;
-            transition: var(--transition);
-        }
-
-        #menu span {
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-
-        .spinner {
-            font-size: 1.2em;
-            color: var(--text-light);
-            animation: blink 0.8s steps(1, start) infinite;
-        }
-
-        @keyframes blink {
-            50% {
-                opacity: 0;
-            }
-        }
-
-        #history {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: var(--text-light);
-        }
-
-        #history li {
-            margin: 8px 0;
-            padding: 8px;
-            border-radius: 8px;
-            background: rgba(0, 0, 0, 0.02);
-            transition: var(--transition);
-            text-decoration: line-through;
-            opacity: 0.6;
-        }
-
-        #history li:hover {
-            background: rgba(0, 0, 0, 0.05);
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">       
 </head>
 
 <body>
@@ -201,113 +21,51 @@
     <div class="main-content">
         <h2>점심 메뉴 고르기 힘드시죠?</h2>
         <div class="card">
-            <label><input type="checkbox" id="midOk">조금 더 보태도 돼요!</label><br><br>
-            <label><input type="checkbox" id="specialOnly">오늘은 특식이랍니다!</label><br><br>
-            <div id="categoryLabel" style="font-size: 1.2em; color: var(--text-light); margin-bottom: 10px;"></div>
-            <div id="menu"></div>
+            <div class="food-icon">
+                <i class="fas fa-utensils"></i>
+            </div>
+            
+            <div class="selector-container">
+                <select id="areaSelector" class="area-selector" onchange="changeArea()">
+                    <option value="hapjeong">합정 지역</option>
+                    <!-- 나중에 추가할 수 있는 지역 옵션 -->
+                    <!-- <option value="hongdae">홍대 지역</option> -->
+                    <!-- <option value="gangnam">강남 지역</option> -->
+                </select>
+            </div>
+            
+            <div class="price-filter">
+                <button class="price-btn active" data-price="cheap">
+                    <i class="fas fa-wallet"></i> 저렴하게
+                </button>
+                <button class="price-btn" data-price="mid">
+                    <i class="fas fa-smile"></i> 기분좋게
+                </button>
+                <button class="price-btn" data-price="expensive">
+                    <i class="fas fa-crown"></i> 플렉스
+                </button>
+            </div>
+            
+            <div id="categoryLabel" style="font-size: 1.2em; color: var(--text-light); margin-bottom: 10px;">
+                합정 맛집 추천
+            </div>
+            
+            <div id="menu">랜덤 맛집 추천을 받아보세요!</div>
+            
+            <div id="restaurantInfo" class="restaurant-info" style="display: none;">
+                <!-- 식당 정보가 여기에 표시됩니다 -->
+            </div>
+            
             <ul id="history"></ul>
+            
             <div id="actionButtons">
-                <button id="recommendBtn" onclick="recommendMenu()">점·메·추!</button>
+                <button id="recommendBtn" onclick="recommendMenu()">
+                    <i class="fas fa-dice"></i> 점·메·추!
+                </button>
             </div>
         </div>
     </div>
 
-    <script>
-        const menuList = {
-            regular: [
-                "돈돼지유 생삼겹살 김치찌개",
-                "금문중화요리",
-                "각시보쌈",
-                "한석화비빔밥",
-                "문현연탄곱창",
-                "합정조이떡볶이",
-                "다북어국",
-                "이리에 라멘",
-                "평이담백 뼈칼국수 본점",
-                "월남선생 합정역점",
-                "합정순대국",
-                "보승회관 합정점",
-                "맥도날드 합정메세나폴리스"
-            ],
-            mid: [
-                "물고기초밥",
-                "의정부부대찌개",
-                "코코이찌방야 합정역메세나폴리스점",
-                "생선구이전문점",
-                "버거4.5"
-            ],
-            special: [
-                "명륜진사갈비 서울 합정점",
-                "피자네버슬립스 합정상수점"
-            ]
-        };
-
-        let usedMenus = [];
-        let history = [];
-
-        function resetHistory() {
-            usedMenus = [];
-            history = [];
-            const button = document.getElementById("recommendBtn");
-            if (button) {
-                button.innerText = "점·메·추!";
-                button.style.backgroundColor = "#3498db";
-            }
-            document.getElementById("menu").innerHTML = "";
-            document.getElementById("history").innerHTML = "";
-            const actionButtons = document.getElementById("actionButtons");
-            actionButtons.innerHTML = `<button id="recommendBtn" onclick="recommendMenu()">점·메·추!</button>`;
-        }
-
-        function recommendMenu() {
-            const specialOnly = document.getElementById("specialOnly").checked;
-            const midOk = document.getElementById("midOk").checked;
-            const actionButtons = document.getElementById("actionButtons");
-            actionButtons.innerHTML = '';
-
-            let category = 'regular';
-            if (specialOnly) category = 'special';
-            else if (midOk) category = 'mid';
-
-            const menus = menuList[category];
-            const unusedMenus = menus.filter(menu => !usedMenus.includes(menu));
-
-            if (unusedMenus.length === 0) {
-                document.getElementById("menu").innerHTML = `<span>흥, 그냥 너 알아서 해라 😤</span>`;
-                actionButtons.innerHTML = `<button onclick='resetHistory()'>🔄 전체 메뉴 리셋</button>`;
-                return;
-            }
-
-            document.getElementById("menu").innerHTML = `<span class='spinner'>두구두구두구...</span>`;
-            document.getElementById("categoryLabel").innerText = "";
-
-            let count = 0;
-            const maxCount = 15;
-            const interval = 80;
-            const shuffleInterval = setInterval(() => {
-                const randomMenu = unusedMenus[Math.floor(Math.random() * unusedMenus.length)];
-                document.getElementById("menu").innerHTML = `오늘은... <span>${randomMenu}</span> 어때?`;
-                count++;
-
-                if (count >= maxCount) {
-                    clearInterval(shuffleInterval);
-                    const finalMenu = unusedMenus[Math.floor(Math.random() * unusedMenus.length)];
-                    document.getElementById("menu").innerHTML = `🍱 오늘은... <span>${finalMenu}</span> 어때?`;
-
-                    history.unshift(finalMenu);
-                    const latestHistory = history.slice(0, 3).map(item => `<li class="strikeout">✔️ ${item}</li>`);
-                    document.getElementById("history").innerHTML = latestHistory.join("");
-
-                    usedMenus.push(finalMenu);
-
-                    actionButtons.innerHTML = `
-                        <button onclick='recommendMenu()'>다시 추천받기</button>
-                        <button onclick='resetHistory()' style='margin-left: 10px; background-color: #e74c3c;'>리셋</button>
-                    `;
-                }
-            }, interval);
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
-
 </html>
